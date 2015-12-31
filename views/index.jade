@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  h1 Post List
+
+  div(id="post-list")
+    if posts
+      ul
+        each post in posts
+          li post.title
