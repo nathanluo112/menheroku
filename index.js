@@ -26,6 +26,10 @@ app.use(express.static(__dirname + '/public'));
 // routes
 app.get('/', router.index());
 app.get('/posts', posts.index(Post));
+app.get('/posts/:id', posts.show(Post));
+app.post('/posts', posts.create(Post));
+app.put('/posts/:id', posts.update(Post));
+app.delete('/posts/:id', posts.delete(Post));
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
