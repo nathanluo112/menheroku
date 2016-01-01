@@ -1,10 +1,42 @@
 extends layout
 
+
+
 block content
+  button(id="new-blog-btn", ng-click="newPostForm()") New Post
+
   h1 Post List
 
   div(id="post-list")
-    if posts
-      ul
-        each post in posts
-          li post.title
+    ul
+      li(ng-repeat="post in posts")
+        a(ng-click="get(post)") {{post.title}}
+        button(ng-click="edit(post)") Edit
+        button(ng-click="delete(post)") Delete
+
+  div(ng-show="mode == NEWFORM")
+    div(id="new-post-form")
+      form(ng-submit="addPost(newPost)")
+        div
+          label(for="title") Title
+          input(id="title", name="title", ng-model="newPost.title")
+
+        div(text-angular, ng-model="newPost.body")
+        button(type="submit") Submit
+
+  div(ng-show="mode == EDITFORM")
+    div(id="edit-post-form")
+      form(ng-submit="editPost(postToEdit)")
+        div
+          label(for="title") Title
+          input(id="title", name="title", ng-model="postToEdit.title", value="{{postToEdit.title}}")
+
+        div(text-angular, ng-model="postToEdit.body") {{postToEdit.body}}
+        button(type="submit") Submit
+
+  div(ng-show="mode == DETAIL")
+    div(id="post-detail")
+      h3 {{displayPost.title}}
+        span {{displayPost.created_at}}
+      div(ng-bind-html="displayPost.body")
+
